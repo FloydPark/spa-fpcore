@@ -1,0 +1,19 @@
+.fp-label{
+    margin-bottom: 2px;
+}
+
+.fp-input{
+    margin-bottom: 2px;
+}
+
+#product_photo{
+
+    height: 160px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+#btn_product_photo{
+    
+    width: 100%;
+}
