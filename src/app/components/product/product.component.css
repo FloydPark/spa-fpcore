@@ -14,6 +14,39 @@
 }
 
 #btn_product_photo{
-    
+
     width: 100%;
+}
+
+.fp-form-btn{
+
+    display: inline-block;
+    vertical-align: top;
+    margin: 4px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.fp-form-btn-disabled {
+    background-color: gray;
+    cursor: default;
+}
+
+.fp-error{
+
+    border: 1px solid red;
+}
+
+.fp-error-message{
+
+    color: red;
+    margin-bottom: 5px;
+}
+
+.fp-info-message{
+
+    color: green;
+    margin-bottom: 5px;
 }

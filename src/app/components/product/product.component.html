@@ -1,23 +1,57 @@
-
 <div class="container">
     <h1>Cat&aacute;logo</h1>
     <br>
     <div class="row">
-        <div class="col-md-3">
-            <div class="fp-label form-control">ID</div>
-            <div class="fp-label form-control">Producto</div>
-            <div class="fp-label form-control">Precio</div>
-            <div class="fp-label form-control">IVA</div>
-        </div>
-        <div class="col-md-6 form-group">
-            <input type="text" class="fp-input form-control" id="product_id">
-            <input type="text" class="fp-input form-control" id="product_name">
-            <input type="text" class="fp-input form-control" id="product_value">
-            <input type="text" class="fp-input form-control" id="product_iva">
-        </div>
-        <div class="col-md-3">
-            <div id="product_photo">PHOTO</div>
-            <input type="submit" id="btn_product_photo" value="Seleccionar archivo">
+        <div class="col-md-7">
+            <div class="fp-form-btn" (click)="initFormMode('new')">
+                <img src="assets/add_fp_btn_form.png" alt="Nuevo">
+            </div>
+            <div [class]="statusSaveButton()" (click)="saveProduct()">
+                <img src="assets/save_fp_btn_form.png" alt="Guardar">
+            </div>
+            <div class="fp-form-btn">
+                <img src="assets/edit_fp_btn_form.png" alt="Editar">
+            </div>
+            <div class="fp-form-btn">
+                <img src="assets/search_fp_btn_form.png" alt="Buscar">
+            </div>
         </div>
     </div>
+    <br>
+    <div class="row" >
+        <div class="col-md-5">
+            <div class="fp-info-message">
+                {{infoMessage}}
+            </div>
+            <div class="fp-error-message" *ngFor="let message of errorMessages">
+                * {{message}}
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="productForm">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="fp-label form-control">ID</div>
+                <div class="fp-label form-control">Producto</div>
+                <div class="fp-label form-control">Precio</div>
+                <div class="fp-label form-control">IVA</div>
+                <div class="fp-label form-control">URL Imagen</div>
+            </div>
+            <div class="col-md-6 form-group">
+                <input type="text" [class]="statusInputForm('product_id')" formControlName="product_id" id="product_id">
+                <input type="text" [class]="statusInputForm('product_name')" formControlName="product_name" id="product_name">
+                <input type="text" [class]="statusInputForm('product_value')" formControlName="product_value" id="product_value">                
+                <div [class]="statusInputForm('product_iva')">
+                    <input type="radio" value=true formControlName="product_iva"> Si
+                    <input type="radio" value=false formControlName="product_iva"> No
+                </div>
+                <input type="text" [class]="statusInputForm('product_url_photo')" formControlName="product_url_photo"
+                    id="product_url_photo">
+            </div>
+            <div class="col-md-3">
+                <div id="product_photo">PHOTO</div>
+                <input disabled type="submit" id="btn_product_photo" value="Seleccionar archivo">
+            </div>
+        </div>
+    </form>
 </div>
