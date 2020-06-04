@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api_fpcore_maestros_host: "http://localhost:8080",
+  product_api_v1_base_resource: "/api/maestros/v1/product/"
 };
 
 /*
