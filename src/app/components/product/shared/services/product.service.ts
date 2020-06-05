@@ -14,4 +14,9 @@ export class ProductService {
 
     return this.httpClient.post(this.API_BASE_RESOURCE_URL, product);
   }
+
+  public searchProduct(idProduct:string){
+
+    return this.httpClient.get(this.API_BASE_RESOURCE_URL+idProduct);
+  }
 }
