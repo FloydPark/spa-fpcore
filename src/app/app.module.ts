@@ -7,11 +7,13 @@ import { ProductComponent } from './components/product/product.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AutoIdModalComponent } from './components/product/auto-id-modal/auto-id-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductComponent
+    ProductComponent,
+    AutoIdModalComponent
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@
         </div>
     </div>
     <br>
-    <div class="row" >
+    <div class="row">
         <div class="col-md-5">
             <div class="fp-info-message">
                 {{infoMessage}}
@@ -27,7 +27,7 @@
                 * {{message}}
             </div>
         </div>
-    </div>    
+    </div>
     <form [formGroup]="productForm">
         <div class="row">
             <div class="col-md-3">
@@ -38,9 +38,19 @@
                 <div class="fp-label form-control">URL Imagen</div>
             </div>
             <div class="col-md-6 form-group">
-                <input type="text" [class]="statusInputForm('product_id')" (keyup.enter)='searchProduct()' formControlName="product_id" id="product_id">
-                <input type="text" [class]="statusInputForm('product_name')" formControlName="product_name" id="product_name">
-                <input type="text" [class]="statusInputForm('product_value')" formControlName="product_value" id="product_value">                
+                <div>
+                    <div id="product_id_row" class="col-md-10">
+                        <input type="text" [class]="statusInputForm('product_id')" (keyup.enter)='searchProduct()'
+                            formControlName="product_id" id="product_id">
+                    </div>
+                    <div id="automatic-id-button" class="col-md-1" (click)="openModal()" *ngIf="formMode == 'new'">
+                        <img src="assets/plus.png" alt="ID Autom&aacute;tico">
+                    </div>
+                </div>
+                <input type="text" [class]="statusInputForm('product_name')" formControlName="product_name"
+                    id="product_name">
+                <input type="text" [class]="statusInputForm('product_value')" formControlName="product_value"
+                    id="product_value">
                 <div [class]="statusInputForm('product_iva')">
                     <input #ivaYes type="radio" value=true formControlName="product_iva"> Si
                     <input #ivaNo type="radio" value=false formControlName="product_iva"> No
@@ -54,4 +64,5 @@
             </div>
         </div>
     </form>
+    <app-auto-id-modal (idEvent)="receiveAutomaticID($event)"></app-auto-id-modal>
 </div>
