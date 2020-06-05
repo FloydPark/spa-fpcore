@@ -9,7 +9,7 @@
             <div [class]="statusSaveButton()" (click)="saveProduct()">
                 <img src="assets/save_fp_btn_form.png" alt="Guardar">
             </div>
-            <div class="fp-form-btn">
+            <div [class]="statusEditButton()" (click)="initFormMode('edit')">
                 <img src="assets/edit_fp_btn_form.png" alt="Editar">
             </div>
             <div class="fp-form-btn" (click)="initFormMode('search')">
@@ -42,8 +42,8 @@
                 <input type="text" [class]="statusInputForm('product_name')" formControlName="product_name" id="product_name">
                 <input type="text" [class]="statusInputForm('product_value')" formControlName="product_value" id="product_value">                
                 <div [class]="statusInputForm('product_iva')">
-                    <input #radioIVAYes [checked]="getIVACheckedValue(true)" type="radio" value=true formControlName="product_iva"> Si
-                    <input #radioIVANo [checked]="getIVACheckedValue(false)" type="radio" value=false formControlName="product_iva"> No
+                    <input #ivaYes type="radio" value=true formControlName="product_iva"> Si
+                    <input #ivaNo type="radio" value=false formControlName="product_iva"> No
                 </div>
                 <input type="text" [class]="statusInputForm('product_url_photo')" formControlName="product_url_photo"
                     id="product_url_photo">

@@ -19,4 +19,9 @@ export class ProductService {
 
     return this.httpClient.get(this.API_BASE_RESOURCE_URL+idProduct);
   }
+
+  public editProduct(product:Product){
+
+    return this.httpClient.put(this.API_BASE_RESOURCE_URL+product.id, product);
+  }
 }
