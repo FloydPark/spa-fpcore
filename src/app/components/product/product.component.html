@@ -12,7 +12,7 @@
             <div class="fp-form-btn">
                 <img src="assets/edit_fp_btn_form.png" alt="Editar">
             </div>
-            <div class="fp-form-btn">
+            <div class="fp-form-btn" (click)="initFormMode('search')">
                 <img src="assets/search_fp_btn_form.png" alt="Buscar">
             </div>
         </div>
@@ -27,7 +27,7 @@
                 * {{message}}
             </div>
         </div>
-    </div>
+    </div>    
     <form [formGroup]="productForm">
         <div class="row">
             <div class="col-md-3">
@@ -38,12 +38,12 @@
                 <div class="fp-label form-control">URL Imagen</div>
             </div>
             <div class="col-md-6 form-group">
-                <input type="text" [class]="statusInputForm('product_id')" formControlName="product_id" id="product_id">
+                <input type="text" [class]="statusInputForm('product_id')" (keyup.enter)='searchProduct()' formControlName="product_id" id="product_id">
                 <input type="text" [class]="statusInputForm('product_name')" formControlName="product_name" id="product_name">
                 <input type="text" [class]="statusInputForm('product_value')" formControlName="product_value" id="product_value">                
                 <div [class]="statusInputForm('product_iva')">
-                    <input type="radio" value=true formControlName="product_iva"> Si
-                    <input type="radio" value=false formControlName="product_iva"> No
+                    <input #radioIVAYes [checked]="getIVACheckedValue(true)" type="radio" value=true formControlName="product_iva"> Si
+                    <input #radioIVANo [checked]="getIVACheckedValue(false)" type="radio" value=false formControlName="product_iva"> No
                 </div>
                 <input type="text" [class]="statusInputForm('product_url_photo')" formControlName="product_url_photo"
                     id="product_url_photo">
