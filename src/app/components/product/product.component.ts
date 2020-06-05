@@ -16,6 +16,9 @@ export class ProductComponent implements OnInit {
   errorMessages: string[];
   infoMessage: string = null;
   formMode: string = null;
+  productSearch: boolean;
+  @ViewChild("ivaYes") radioIvaYes: HTMLInputElement;
+  @ViewChild("ivaNo") radioIvaNo: HTMLInputElement;
 
   productForm = new FormGroup({
 
@@ -40,8 +43,7 @@ export class ProductComponent implements OnInit {
   }
 
   initSearchMode() {
-
-    this.cleanMessages()
+    
     this.productForm.reset()
     this.productForm.get("product_id").enable()
     this.productForm.get("product_name").disable({ onlySelf: true })
@@ -51,26 +53,41 @@ export class ProductComponent implements OnInit {
   }
 
   initNewMode() {
-
-    this.cleanMessages()
+    
     this.productForm.reset()
     this.productForm.enable()
   }
 
-  initFormMode(mode: string): void {
+  initEditMode() {
+
+    if (this.productSearch) {
+
+      this.productSearch = false;      
+      this.productForm.enable()
+      this.productForm.get("product_id").disable({onlySelf: true})
+    }
+  }
+
+  initFormMode(mode: string, cleanMessages:boolean = true): void {
     this.formMode = mode;
+    if(cleanMessages){
+      this.cleanMessages();
+    }
     switch (mode) {
       case 'edit':
 
+        this.initEditMode();
         break;
 
       case 'search':
 
+        this.productSearch = false;
         this.initSearchMode();
         break;
 
       case 'new':
 
+        this.productSearch = false;
         this.initNewMode();
         break;
     }
@@ -91,20 +108,40 @@ export class ProductComponent implements OnInit {
         urlPhoto: this.productForm.get("product_url_photo").value,
       }
 
-      this.productService.addProduct(product).subscribe((data: APIResponse<Product>) => {
+      if(this.formMode == 'new'){
 
-        this.infoMessage = "El producto ha sido creado.";
-        this.productForm.reset()
+        this.productService.addProduct(product).subscribe((data: APIResponse<Product>) => {
 
-      }, (errorResponse: any) => {
+          this.infoMessage = "El producto ha sido creado.";
+          this.initFormMode('new', false);
+  
+        }, (errorResponse: any) => {
+  
+          if (errorResponse.error.errors) {
+            this.errorMessages = errorResponse.error.errors;
+          }
+          else {
+            this.errorMessages.push(errorResponse.message);
+          }
+        });
+      }
+      else
+      {
+        this.productService.editProduct(product).subscribe((data: any) => {
 
-        if (errorResponse.error.errors) {
-          this.errorMessages = errorResponse.error.errors;
-        }
-        else {
-          this.errorMessages.push(errorResponse.message);
-        }
-      });
+          this.infoMessage = "El producto ha sido actualizado.";
+          this.initFormMode('new', false);
+  
+        }, (errorResponse: any) => {
+  
+          if (errorResponse.error.errors) {
+            this.errorMessages = errorResponse.error.errors;
+          }
+          else {
+            this.errorMessages.push(errorResponse.message);
+          }
+        });
+      }
     }
   }
 
@@ -117,8 +154,9 @@ export class ProductComponent implements OnInit {
 
         this.productForm.get("product_name").setValue(response.data.name);
         this.productForm.get("product_value").setValue(response.data.value);
-        this.productForm.get("product_iva").setValue(response.data.iva);
+        this.productForm.get("product_iva").setValue(""+(response.data.iva));
         this.productForm.get("product_url_photo").setValue(response.data.urlPhoto);
+        this.productSearch = true;
 
       }, (errorResponse) => {
 
@@ -135,9 +173,19 @@ export class ProductComponent implements OnInit {
   statusSaveButton(): string {
 
     var cssClasses = "fp-form-btn";
-    if (!this.productForm.valid) {
+    if (!this.productForm.valid || this.formMode == 'search') {
 
       cssClasses += " fp-form-btn-disabled"
+    }
+    return cssClasses;
+  }
+
+  statusEditButton(): string {
+
+    var cssClasses = "fp-form-btn fp-form-btn-disabled";
+    if (this.productSearch && this.formMode == 'search') {
+
+      cssClasses = "fp-form-btn"
     }
     return cssClasses;
   }
@@ -145,21 +193,13 @@ export class ProductComponent implements OnInit {
   statusInputForm(formControl: string): string {
 
     var cssClasses = "fp-input form-control";
-    if (!this.productForm.get(formControl).valid && !this.productForm.get(formControl).untouched) {
+    if (!this.productForm.get(formControl).valid && !this.productForm.get(formControl).untouched && this.productForm.get(formControl).enabled) {
 
       cssClasses += " fp-error"
     }
     return cssClasses;
   }
 
-  getIVACheckedValue(yesOption:boolean):boolean{
-    
-    var result:boolean = false;
-    var value = this.productForm.get("product_iva").value;
-    if(value !== null) {
-
-      result = yesOption ? value : !value;
-    }
-    return result;
-  }
+  
+  
 }
