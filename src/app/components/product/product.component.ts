@@ -4,6 +4,7 @@ import { RegexpUtil } from '../../shared/utils/regexp.util';
 import { ProductService } from './shared/services/product.service';
 import { Product } from './shared/models/product.model';
 import { APIResponse } from '../../shared/models/api-response.model'
+declare var $: any;
 
 @Component({
   selector: 'app-product',
@@ -200,6 +201,14 @@ export class ProductComponent implements OnInit {
     return cssClasses;
   }
 
-  
+  openModal(){
+
+    $('#automatic_id_modal').modal();
+  }
+
+  receiveAutomaticID($event){
+
+    this.productForm.get("product_id").setValue($event);
+  }
   
 }

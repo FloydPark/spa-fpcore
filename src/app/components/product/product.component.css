@@ -50,3 +50,18 @@
     color: green;
     margin-bottom: 5px;
 }
+
+#product_id_row{
+
+    display: inline-block;
+    vertical-align: top;
+    padding: 0px;
+}
+
+#automatic-id-button{
+
+    display: inline-block;
+    vertical-align: top;
+    padding: 7px;
+    cursor: pointer;
+}
