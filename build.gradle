@@ -1,0 +1,50 @@
+plugins {
+	id 'maven-publish'	
+}
+
+configurations {
+	spa
+}
+
+group = 'com.floydpark.spa'
+
+def url_archiva = project.hasProperty("url_archiva") ? url_archiva : ""
+def usr_archiva = project.hasProperty("usr_archiva") ? usr_archiva : ""
+def psw_archiva = project.hasProperty("psw_archiva") ? psw_archiva : ""
+def artifact_version = project.hasProperty("artifact_version") ? artifact_version : version
+
+def zipFile = file("dist/spa-fpcore.zip")
+def zipArtifact = artifacts.add('spa', zipFile) {
+    type 'zip'    
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			version = artifact_version		
+			artifact zipArtifact
+		}
+	}
+	repositories {
+		maven {
+			name = "Archiva"
+			url = url_archiva
+			credentials {
+				username = usr_archiva
+				password = psw_archiva
+			}
+		}
+	}
+}
+
+task zipSPA(type: Zip) {
+   from 'dist/spa-fpcore'
+   include '**/*'   
+   archiveName 'spa-fpcore.zip'
+   destinationDir(file('dist/'))
+}
+
+task cleanBuild(type: Delete) {
+  delete 'dist'
+  followSymlinks = true
+}

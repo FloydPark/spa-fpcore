@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# gradle configuration
+
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
